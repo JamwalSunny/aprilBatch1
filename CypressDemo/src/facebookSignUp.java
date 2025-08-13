@@ -10,14 +10,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import org.junit.Assert;
+import io.github.bonigarcia.wdm.WebDriverManager;
 public class facebookSignUp {
 
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
+		 WebDriverManager.chromedriver().setup();
 		 WebDriver driver = new ChromeDriver();
-//	    options.addArguments("--start-maximized");
-//	    driver.manage().window().maximize();
+//    options.addArguments("--start-maximized");
+//    driver.manage().window().maximize();
 	    driver.get("https://en-gb.facebook.com/reg/");
 	    Options op = driver.manage();
 	    Window w = op.window();
@@ -47,7 +48,9 @@ public class facebookSignUp {
 	    String actualText = errorMessageElement.getText();
 	    System.out.println("actualText is---->:"+actualText);
 	    String expectedText = "Create a new account";
-	    Assert.assertEquals("Error message does not match!", expectedText, actualText);
+	    if (!expectedText.equals(actualText)) {
+	        throw new RuntimeException("Error message does not match! expected: " + expectedText + ", actual: " + actualText);
+	    }
 	}
 
 }
